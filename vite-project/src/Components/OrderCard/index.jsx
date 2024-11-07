@@ -8,14 +8,16 @@ const OrderCard = props => {
                 <figure className='w-20 h-20'>
                     <img src={image} alt={title} className='w-full h-full rounded-lg object-cover'/>
                 </figure>
-                <p className='text-xs font-light'>{title}</p> 
+                <p className='text-xs font-light px-4'>{title}</p> 
             </div>
             <div className='flex items-center gap-2'>
                 <p className='text-sm font-medium'>
-                    {price}
+                    ${price}
                 </p>
                 <button>
-                    <XMarkIcon className="size-6 text-black" onClick={() => handleDelete(id)}/>
+                    {
+                        handleDelete && <XMarkIcon className="size-4 text-black" onClick={() => handleDelete(id)}/>
+                    }
                 </button>
                 
             </div>
