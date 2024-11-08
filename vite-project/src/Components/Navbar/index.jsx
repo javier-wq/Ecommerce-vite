@@ -4,7 +4,7 @@ import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from "../../Context"
 
 const Navbar = () => {
-    const {count} = useContext(ShoppingCartContext)
+    const {count, setSearchByCategory} = useContext(ShoppingCartContext)
     const activeStyle = 'underline underline-offset-4'
  
     return (
@@ -19,6 +19,7 @@ const Navbar = () => {
                 <li>
                     <NavLink 
                     to='/'
+                    onClick={() => setSearchByCategory('')}
                     className={({isActive}) =>
                         isActive ? activeStyle : undefined
                     }>
@@ -27,47 +28,42 @@ const Navbar = () => {
                 </li>
                 <li>
                     <NavLink 
-                    to='/clothes'
+                    to='/womens-clothing'
+                    onClick={() => setSearchByCategory("women's clothing")}
                     className={({isActive}) =>
                         isActive ? activeStyle : undefined
                     }>
-                        Clothes
+                        Womens clothing
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink 
+                    to='/mens-clothing'
+                    onClick={() => setSearchByCategory("men's clothing")}
+                    className={({isActive}) =>
+                        isActive ? activeStyle : undefined
+                    }>
+                        Mens clothing
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink 
+                    to='/jewelery'
+                    onClick={() => setSearchByCategory('jewelery')}
+                    className={({isActive}) =>
+                        isActive ? activeStyle : undefined
+                    }>
+                        Jewelery
                     </NavLink>
                 </li>
                 <li>
                     <NavLink 
                     to='/electronics'
+                    onClick={() => setSearchByCategory('electronics')}
                     className={({isActive}) =>
                         isActive ? activeStyle : undefined
                     }>
                         Electronics
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink 
-                    to='/furnitures'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }>
-                        Furnitures
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink 
-                    to='/toys'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }>
-                        Toys
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink 
-                    to='/others'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }>
-                        Others
                     </NavLink>
                 </li>
             </ul>

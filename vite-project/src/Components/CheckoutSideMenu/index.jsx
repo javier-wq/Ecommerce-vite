@@ -9,7 +9,7 @@ import OrderCard from "../OrderCard"
 
 
 const CheckoutSideMenu = () => {
-    const {isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts, setCartProducts, setCount, count, setOrder, order} = useContext(ShoppingCartContext)
+    const {isCheckoutSideMenuOpen, closeCheckoutSideMenu, cartProducts, setCartProducts, setCount, count, setOrder, order,setSearchByTitle} = useContext(ShoppingCartContext)
 
     const handleDelete = (id) => {
         const filteredProducts = cartProducts.filter(product => product.id != id)
@@ -28,6 +28,7 @@ const CheckoutSideMenu = () => {
         setOrder([...order, orderToAdd]),
         setCartProducts([],
         setCount(0),
+        setSearchByTitle(null),
         closeCheckoutSideMenu()
         )
     }
