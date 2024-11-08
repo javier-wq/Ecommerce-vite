@@ -4,9 +4,77 @@ import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from "../../Context"
 
 const Navbar = () => {
-    const {count, setSearchByCategory} = useContext(ShoppingCartContext)
+    const {count, setSearchByCategory, setSignOut, signOut} = useContext(ShoppingCartContext)
     const activeStyle = 'underline underline-offset-4'
- 
+
+    // Sign Out
+    const sign_Out = localStorage.getItem('sign-out')
+    const parsedSignOut = JSON.parse(sign_Out)
+    const isUserSignOut = signOut || parsedSignOut
+
+    const handleSignOut = () => {
+        const stringfiedSignOut = JSON.stringify(true)
+        localStorage.setItem('sign-out', stringfiedSignOut)
+        setSignOut(true)
+    }
+
+    const renderView = () => {
+        if (isUserSignOut) {
+            return (
+                <li>
+                    <NavLink 
+                    to='/sign-in'
+                    className={({isActive}) =>
+                        isActive ? activeStyle : undefined
+                    }
+                    onClick={() => handleSignOut()}>
+                        Sign Out
+                    </NavLink>
+                </li>
+            )
+        } else {
+            return (
+                <>
+                    <li className="text-black/60">
+                        javiermonge247@gmail.com
+                    </li>
+                    <li>
+                        <NavLink 
+                            to='/my-orders'
+                            className={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }>
+                            My Orders
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                        to='/my-account'
+                        className={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }>
+                            My Account
+                        </NavLink>
+                    </li>
+                    <li>
+                        <NavLink 
+                        to='/sign-in'
+                        className={({isActive}) =>
+                            isActive ? activeStyle : undefined
+                        }
+                        onClick={() => handleSignOut()}>
+                            Sign Out
+                        </NavLink>
+                    </li>
+                    <li className="flex items-center">
+                        <ShoppingBagIcon className="size-6 text-black"/>
+                        <div> {count} </div>   
+                </li>
+                </>
+            )
+        }
+    }
+
     return (
         <nav className="flex justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-light top-0">
             <ul className="flex items-center gap-3">
@@ -69,36 +137,7 @@ const Navbar = () => {
             </ul>
 
             <ul className="flex items-center gap-3">
-                <li className="text-black/60">
-                        Javi@gmail.com
-                </li>
-                <li>
-                    <NavLink 
-                    to='/my-orders'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }>
-                        My Orders
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink 
-                    to='/my-account'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }>
-                        My Account
-                    </NavLink>
-                </li>
-                <li>
-                    <NavLink 
-                    to='/sign-in'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }>
-                        Sign In
-                    </NavLink>
-                </li>
+               {renderView()}
                 <li className="flex items-center">
                     <ShoppingBagIcon className="size-6 text-black"/>
                     <div> {count} </div>   
