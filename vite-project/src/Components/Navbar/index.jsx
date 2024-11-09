@@ -1,16 +1,25 @@
 import { useContext } from "react"
 import { NavLink } from "react-router-dom"
-import { ShoppingBagIcon } from '@heroicons/react/24/solid'
 import { ShoppingCartContext } from "../../Context"
+import ShoppingCart from "../ShoppingCart"
 
 const Navbar = () => {
-    const {count, setSearchByCategory, setSignOut, signOut} = useContext(ShoppingCartContext)
+    const {setSearchByCategory, setSignOut, signOut, account} = useContext(ShoppingCartContext)
     const activeStyle = 'underline underline-offset-4'
 
     // Sign Out
     const sign_Out = localStorage.getItem('sign-out')
     const parsedSignOut = JSON.parse(sign_Out)
     const isUserSignOut = signOut || parsedSignOut
+
+    // Account
+    const Account = localStorage.getItem('account')
+    const parsedAccount = JSON.parse(Account)
+    
+    // Has An Account
+    const noAccountInLocalStorage = parsedAccount ? Object.keys(parsedAccount).length === 0 : true
+    const noAccountInLocalState = account ? Object.keys(account).length === 0 : true
+    const hasUserAnAccount = !noAccountInLocalStorage || !noAccountInLocalState
 
     const handleSignOut = () => {
         const stringfiedSignOut = JSON.stringify(true)
@@ -19,24 +28,11 @@ const Navbar = () => {
     }
 
     const renderView = () => {
-        if (isUserSignOut) {
-            return (
-                <li>
-                    <NavLink 
-                    to='/sign-in'
-                    className={({isActive}) =>
-                        isActive ? activeStyle : undefined
-                    }
-                    onClick={() => handleSignOut()}>
-                        Sign Out
-                    </NavLink>
-                </li>
-            )
-        } else {
+        if(hasUserAnAccount && !isUserSignOut){
             return (
                 <>
                     <li className="text-black/60">
-                        javiermonge247@gmail.com
+                        {parsedAccount?.email}
                     </li>
                     <li>
                         <NavLink 
@@ -66,13 +62,22 @@ const Navbar = () => {
                             Sign Out
                         </NavLink>
                     </li>
-                    <li className="flex items-center">
-                        <ShoppingBagIcon className="size-6 text-black"/>
-                        <div> {count} </div>   
-                </li>
                 </>
             )
-        }
+        } else {
+            return (
+                <li>
+                    <NavLink 
+                    to='/sign-in'
+                    className={({isActive}) =>
+                        isActive ? activeStyle : undefined
+                    }
+                    onClick={() => handleSignOut()}>
+                        Sign Out
+                    </NavLink>
+                </li>
+            )
+        } 
     }
 
     return (
@@ -80,7 +85,7 @@ const Navbar = () => {
             <ul className="flex items-center gap-3">
                 <li className="font-semibold text-lg">
                     <NavLink 
-                    to='/' >
+                    to={`${isUserSignOut ? '/sign-in' : '/'}`} >
                         Shopi
                     </NavLink>
                 </li>
@@ -139,8 +144,7 @@ const Navbar = () => {
             <ul className="flex items-center gap-3">
                {renderView()}
                 <li className="flex items-center">
-                    <ShoppingBagIcon className="size-6 text-black"/>
-                    <div> {count} </div>   
+                    <ShoppingCart />
                 </li>
             </ul>
         </nav>
