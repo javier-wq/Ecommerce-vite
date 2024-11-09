@@ -61,7 +61,6 @@ export const ShoppingCartProvider = ( {children} ) => {
 
     // Get Products By Category
     const [searchByCategory, setSearchByCategory] = useState(null)
-    console.log(searchByCategory);
     
     
 
@@ -76,7 +75,6 @@ export const ShoppingCartProvider = ( {children} ) => {
     }
 
     const filteredItemsByCategory = (items, searchByCategory) => {
-        console.log(items?.filter(item => item.category.toLowerCase().includes(searchByCategory.toLowerCase())));
         return items?.filter(item => item.category.toLowerCase().includes(searchByCategory.toLowerCase()))
     }
     

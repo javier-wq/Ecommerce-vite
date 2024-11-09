@@ -27,8 +27,6 @@ function SignIn() {
 
   const createAnAccount = () => {
     const formData = new FormData(form.current)
-    console.log(formData);
-    console.log(form);
     
     const data = {
       name: formData.get('name'),
@@ -36,7 +34,6 @@ function SignIn() {
       password: formData.get('password')
     }
 
-    console.log(data);
     
 
     const stringfiedAccount = JSON.stringify(data)
